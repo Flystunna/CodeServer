@@ -2,7 +2,7 @@ This is a RESTFul API named Code Server API built using the C# Language and .NET
 It is capable of running on multiple platforms efficiently.
 
 .NET Core 3.1 is the latest version on the Core platform released by windows. 
-
+I tried as much as possible to break down the API into several modules for better core quality and readability. 
 The Code Server API is using the multi layered architecture.
 
 CodeServer API which is the point of access for our application. Houses our controllers. 
