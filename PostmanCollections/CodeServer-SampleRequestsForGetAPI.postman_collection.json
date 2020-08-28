@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "f562eb15-1352-45f7-bd1c-828cf8d30681",
+		"name": "CodeServer-SampleRequestsForGetAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get - Expect 200",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "21394da1-72ed-4009-8e81-79c4eab7c07e",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44370/api/v2/projects/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44370",
+					"path": [
+						"api",
+						"v2",
+						"projects",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get - Illegal Path Variables - Expect 400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "65ab73f4-5cfe-4bf9-ba7e-56b9d0269280",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44370/api/v2/projects/whatever",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44370",
+					"path": [
+						"api",
+						"v2",
+						"projects",
+						"whatever"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get - Invalid Path Variables - Expect 400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c030e581-2557-476e-9574-7d29d56c8c26",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44370/api/v2/projects/whatever",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44370",
+					"path": [
+						"api",
+						"v2",
+						"projects",
+						"whatever"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

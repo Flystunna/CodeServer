@@ -1,0 +1,11 @@
+INSERT INTO sdlc_system (base_url, description, created_date, last_modified_date) VALUES ('http://jira.company.com', 'Company JIRA', GETDATE(), GETDATE());
+INSERT INTO sdlc_system (base_url, description, created_date, last_modified_date) VALUES ('http://bugzilla.company.com', 'Company BugZilla', GETDATE(), GETDATE());
+INSERT INTO sdlc_system (base_url, description, created_date, last_modified_date) VALUES ('http://mantis.company.com', 'Company Mantis', GETDATE(), GETDATE());
+INSERT INTO project (external_id, name, sdlc_systemid, created_date, last_modified_date) VALUES ('SAMPLEPROJECT', 'Sample Project', 1, GETDATE(), GETDATE());
+INSERT INTO project (external_id, name, sdlc_systemid, created_date, last_modified_date) VALUES ('PROJECTX', 'Project X', 2, GETDATE(), GETDATE());
+INSERT INTO project (external_id, name, sdlc_systemid, created_date, last_modified_date) VALUES ('SAMPLEPROJECT', 'Sample Project', 2, GETDATE(), GETDATE());
+INSERT INTO project (external_id, name, sdlc_systemid, created_date, last_modified_date) VALUES ('PROJECTX', 'Project X', 1, GETDATE(), GETDATE());
+INSERT INTO project (external_id, name, sdlc_systemid, created_date, last_modified_date) VALUES ('PROJECTZERO', 'Project Zero', 3, GETDATE(), GETDATE());
+INSERT INTO project (external_id, name, sdlc_systemid, created_date, last_modified_date) VALUES ('PROJECTONE', 'Project One', 3, GETDATE(), GETDATE());
+INSERT INTO project (external_id, name, sdlc_systemid, created_date, last_modified_date) VALUES ('PROJECTTWO', 'Project Two', 3, GETDATE(), GETDATE());
+INSERT INTO project (external_id, name, sdlc_systemid, created_date, last_modified_date) VALUES ('PROJECTTHREE', 'Project Three', 3, GETDATE(), GETDATE());
