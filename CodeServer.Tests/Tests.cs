@@ -139,8 +139,7 @@ namespace CodeServer.Tests
             //var result1 = await controller.CreateProject(model: modelDTO);
             #endregion
 
-            A.CallTo(() => prjServiceFake.GetAllProjects())
-                .Returns(prjList);
+            A.CallTo(() => prjServiceFake.GetAllProjects()).Returns(prjList);
 
             ProjectsController sut = CreateSut(prjServiceFake, mapServiceFake, sdlcServiceFake);
 
