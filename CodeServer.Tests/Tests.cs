@@ -22,6 +22,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Builder;
 using FakeItEasy;
 using Moq;
+using System.Threading.Tasks;
 
 namespace CodeServer.Tests
 {
@@ -198,4 +199,5 @@ namespace CodeServer.Tests
             Assert.Equal(HttpStatusCode.OK.ToString(), response.StatusCode.ToString());
         }
     }
+  
 }
