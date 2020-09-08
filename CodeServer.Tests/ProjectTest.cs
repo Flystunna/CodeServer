@@ -62,7 +62,21 @@ namespace CodeServer.Tests
                         base_url = "hhhh",
                         description = "describe",
                         created_date = DateTime.Now
-                }
+                },
+                new sdlc_system
+                {
+                    id = 2,
+                    base_url = "hhhh2",
+                    description = "describe2",
+                    created_date = DateTime.Now
+                },
+                new sdlc_system
+                {
+                    id = 3,
+                    base_url = "hhhh3",
+                    description = "describe3",
+                    created_date = DateTime.Now
+                },
             };
 
             projLisr = new List<project>()
@@ -118,14 +132,16 @@ namespace CodeServer.Tests
 
             mockSvc.Setup(repo => repo.GetAllProjects()).ReturnsAsync(projLisr.ToList());
 
-            mockSvc.Setup(repo => repo.GetProjectById(It.IsAny<int>())).ReturnsAsync((int i)
-                          => projLisr.SingleOrDefault(x => x.id == i));
+            mockSvc.Setup(repo => repo.GetProjectById(It.IsAny<int>())).ReturnsAsync((int i) => projLisr.SingleOrDefault(x => x.id == i));
+
+            mockSvc.Setup(repo => repo.GetProjectByIdAsNoTracking(It.IsAny<int>())).ReturnsAsync((int i) => projLisr.SingleOrDefault(x => x.id == i));
 
             mockSvc.Setup(repo => repo.CreateProject(It.IsAny<project>())).Callback((project newProj) =>
             {
                 newProj.id = projLisr.Count() + 1;
                 projLisr.Add(newProj);
-            });
+
+            }).ReturnsAsync(CreateDefault());
 
             mockSvc.SetupAllProperties();
 
@@ -133,8 +149,9 @@ namespace CodeServer.Tests
 
             mocSdlckSvc.Setup(repo => repo.GetAllSdlcSystem()).ReturnsAsync(It.IsAny<IEnumerable<sdlc_system>>());
 
-            mocSdlckSvc.Setup(repo => repo.GetSdlcSystemById(It.IsAny<int>())).ReturnsAsync((int i)
-                          => sdlcList.SingleOrDefault(x => x.id == i));
+            mocSdlckSvc.Setup(repo => repo.GetSdlcSystemById(It.IsAny<int>())).ReturnsAsync((int i) => sdlcList.SingleOrDefault(x => x.id == i));
+           
+            mocSdlckSvc.Setup(repo => repo.GetSdlcSystemByIdAsNoTracking(It.IsAny<int>())).ReturnsAsync((int i) => sdlcList.SingleOrDefault(x => x.id == i));
 
             mocSdlckSvc.Setup(repo => repo.CreateSdlcSystem(It.IsAny<sdlc_system>())).Callback((sdlc_system sdlcSyst) =>
             {
@@ -143,9 +160,13 @@ namespace CodeServer.Tests
             });
 
             mocSdlckSvc.SetupAllProperties();
-
+           
 
             _contr = new ProjectsController(mockSvc.Object, _mapper, mocSdlckSvc.Object);
+            _contr.ControllerContext = new Microsoft.AspNetCore.Mvc.ControllerContext();
+            _contr.ControllerContext.HttpContext = new DefaultHttpContext();
+            _contr.ControllerContext.HttpContext.Request.Scheme = "http";
+            _contr.ControllerContext.HttpContext.Request.Host = new HostString("localhost");
         }
         private project CreateDefault()
         {
@@ -191,6 +212,8 @@ namespace CodeServer.Tests
             // Act
             var employeeDetail = await _contr.GetAllProjects();
 
+            mockSvc.Verify(s => s.GetAllProjects(), Moq.Times.Once());
+
             Assert.IsType<OkObjectResult>(employeeDetail);
         }
         [Fact]
@@ -206,6 +229,10 @@ namespace CodeServer.Tests
 
             var model = empList.Value as ProjectDTO;
 
+            //Assert
+
+            mockSvc.Verify(s => s.GetProjectById(id),  Moq.Times.Once());
+
             Assert.IsType<OkObjectResult>(result);
             Assert.NotNull(empList);
             Assert.Equal(model.id, id);
@@ -214,10 +241,15 @@ namespace CodeServer.Tests
         public async Task CreateProject()
         {
             //Arrange
+            var newDTO = CreateDefaultDTO();
+            var newproj = CreateDefault();
 
-            var newMap = _mapper.Map(CreateDefault(), CreateDefaultDTO());
+            var newMap = _mapper.Map(newproj, newDTO);
+
             // Act
             var result = await _contr.CreateProject(newMap);
+
+            //Assert
 
             var empList = result as CreatedResult;
 

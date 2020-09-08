@@ -111,34 +111,6 @@ namespace CodeServer.Tests
             {
                 id = 1
             };
-            #region comments
-            //var model2 = new project
-            //{
-            //    external_id = "SAMPLEPROJECT",
-
-            //};
-            //model2.sdlc_system = new sdlc_system
-            //{
-            //    id = 1
-            //};
-
-            //var mockProjectSvc = new Mock<IProjectService>();
-            //var mockSdlcSvc = new Mock<ISdlcSystemService>();
-            //var mockUow = new Mock<IUnitOfWork>();
-            //var mockMapper = new Mock<IMapper>();
-            //var mockDbContext = new Mock<ApplicationDbContext>();
-
-            //mockProjectSvc.Setup(x => x.CreateProject(It.IsAny<project>())).ReturnsAsync(model2);
-            //mockSdlcSvc.Setup(x => x.GetSdlcSystemByIdAsNoTracking(It.IsAny<int>())).ReturnsAsync(model2.sdlc_system);
-
-            //var controller = new ProjectsController(mockProjectSvc.Object, mockMapper.Object, mockSdlcSvc.Object);
-            //controller.ControllerContext = new Microsoft.AspNetCore.Mvc.ControllerContext();
-            //controller.ControllerContext.HttpContext = new DefaultHttpContext();
-            //controller.ControllerContext.HttpContext.Request.Scheme = "http";
-            //controller.ControllerContext.HttpContext.Request.Host = new HostString("localhost");
-
-            //var result1 = await controller.CreateProject(model: modelDTO);
-            #endregion
 
             A.CallTo(() => prjServiceFake.GetAllProjects()).Returns(prjList);
 
