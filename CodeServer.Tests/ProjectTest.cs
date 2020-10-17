@@ -23,6 +23,9 @@ using Microsoft.AspNetCore.Builder;
 using FakeItEasy;
 using Moq;
 using System.Threading.Tasks;
+using System.Collections;
+using System.Data;
+using Shouldly;
 
 namespace CodeServer.Tests
 {
@@ -256,6 +259,58 @@ namespace CodeServer.Tests
             Assert.IsType<CreatedResult>(result);
 
             Assert.NotNull(empList);
+        }
+
+        [Fact]
+        public void TestNullDataTables()
+        {
+            DataTable data = new DataTable();
+
+            data = null;
+            //post null datatable
+            Should.Throw<ArgumentNullException>(() =>
+            {
+
+                DataTableHelpers.GetDataTableColumns(data);
+
+            });
+        }
+        [Fact]
+        public void TestDataTables()
+        {
+            DataTable data = new DataTable();
+
+            data.Columns.Add("NewColumn", typeof(System.Int32));
+
+            foreach (DataRow row in data.Rows)
+            {
+                //need to set value to NewColumn column
+                row["NewColumn"] = 0;   // or set it to some other value
+            };
+
+            var send = DataTableHelpers.GetDataTableColumns(data);
+
+            Assert.IsType<ArrayList>(send);
+        }
+    }
+
+    public class DataTableHelpers
+    {
+        public static ArrayList GetDataTableColumns(DataTable dataTable)
+        {
+            if (dataTable == null)
+            {
+                throw new ArgumentNullException(nameof(dataTable));
+            }
+
+            var columnsCount = dataTable.Columns.Count;
+            var columnHeadings = new ArrayList();
+            for (var i = 0; i < columnsCount; i++)
+            {
+                var dataColumn = dataTable.Columns[i];
+                columnHeadings.Add(dataColumn.ColumnName.ToString());
+            }
+            return columnHeadings;
         }
     }
 }
